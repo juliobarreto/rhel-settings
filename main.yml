@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  gather_facts: true
+  name: YUM Automation
+  connection: local
+  become: yes
+  roles:
+    - yum
