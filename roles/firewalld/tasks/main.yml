@@ -1,2 +1,40 @@
 ---
-# tasks file for firewalld
+- name: Enable FirewallD
+  ansible.builtin.systemd:
+    name: firewalld
+    state: started
+    enable: yes
+
+- name: Enable Ports SSH FirewallD
+  ansible.posix.firewalld:
+    port: 12235/tcp
+    zone: public
+    permanent: yes
+    state: present
+
+- name: Enable Service Zabbix-Agent
+  ansible.posix.firewalld:
+    service: 
+      - zabbix-agent
+      - jboss
+      - ssh
+      - gluster
+    zone: public
+    permanent: yes
+    state: present
+
+- name: Enable Ports PGPool-II
+  ansible.posix.firewalld:
+    port:
+      - 48000-48010/tcp 
+      - 8444/tcp 
+      - 8445/tcp 
+      - 8446/tcp 
+      - 8081/tcp 
+      - 8082/tcp 
+      - 8083/tcp 
+      - 8084/tcp 
+      - 1999/tcp 9898/tcp
+    zone: public
+    permanent: yes
+    state: present

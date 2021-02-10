@@ -3,7 +3,7 @@
   yum:
     name: '*'
     state: latest
-    bugfix: true
+    bugfix: yes
     exclude: 'glusterfs*'
     update_cache: true
   register: yum_output  
@@ -12,7 +12,7 @@
   yum:
     name: '*'
     state: latest
-    security: true
+    security: yes
     exclude: 'glusterfs*'
     update_cache: true
   register: yum_output  

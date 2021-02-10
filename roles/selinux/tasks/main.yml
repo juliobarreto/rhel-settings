@@ -1,2 +1,30 @@
 ---
-# tasks file for selinux
+- name: Enable SELinux
+  ansible.posix.selinux:
+    policy: targeted
+    state: enforcing
+
+- name: Disable Special Permissions
+  ansible.builtin.command: rttahc -a /usr/local/dcon/users_historylogs/*
+
+  
+- name: Setting SELinux Context
+  community.general.sefcontext:
+    target: '/usr/local/dcon/users_historylogs(/.*)?'
+    seuser: system_u
+    setype: usr_t
+    state: present
+
+- name: Apply new SELinux file context to filesystem
+  ansible.builtin.command: restorecon -irv /usr/local/dcon/users_historylogs
+
+
+- name: Enable Special Permissions
+  ansible.builtin.command: rttahc +a /usr/local/dcon/users_historylogs/*
+
+- name: Enable SSH Port SELinux
+  communit.general.seport:
+    ports: 12235
+    proto: tcp
+    setype: ssh_port_t
+    state: present
