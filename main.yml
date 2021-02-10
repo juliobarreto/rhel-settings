@@ -6,3 +6,5 @@
   become: yes
   roles:
     - yum
+    - selinux
+    - firewalld
