@@ -1,10 +1,12 @@
 ---
-- hosts: localhost
+- hosts: servidores
   gather_facts: true
-  name: YUM Automation
-  connection: local
+  connection: ssh
+  name: Automation Settings RHEL
   become: yes
+  become_method: sudo
   roles:
-    - yum
+    - defaults
+  #  - yum
     - selinux
     - firewalld

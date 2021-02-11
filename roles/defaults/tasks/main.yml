@@ -1,2 +1,4 @@
 ---
 # tasks file for default
+- name: Teste de Conectividade
+  ansible.builtin.ping:

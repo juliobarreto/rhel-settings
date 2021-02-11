@@ -1,2 +1,12 @@
 ---
 # tasks file for kdump
+- name: Install kexec-tools
+  package:
+    name: kexec-tools
+    state: present
+
+- name: Enable KDUMP
+  service:
+    name: kdump
+    state: started
+    enable: yes
