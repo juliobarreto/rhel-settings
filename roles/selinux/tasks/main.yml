@@ -1,34 +1,24 @@
 ---
 - name: Install SELinux python3 tools
-  package:
-    name:
-      - libselinux-python
-      - policycoreutils-python
-    state: present
-    
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: latest
+  with_items: "{{ selinux_tools_packages }}"
+
 - name: Enable SELinux
   ansible.posix.selinux:
     policy: targeted
-    state: permissive
+    state: "{{ state_first_selinux }}"
   register: result
 
-- name: Reboot immediately if there was a change.
-  shell: "sleep 5 && reboot"
-  async: 1
-  poll: 0
-  when: result is succeeded
-
-- name: Wait for the reboot to complete if there was a change.
-  wait_for_connection:
-    connect_timeout: 20
-    sleep: 5
-    delay: 5
-    timeout: 100
-  when: result is succeeded
+- name: Reboot machine post SELinux Permissive
+  reboot:
+    pre_reboot_delay: 5
+    reboot_timeout: 100
 
 - name: Enable SSH Port SELinux
   community.general.seport:
-    ports: 12235
+    ports: "{{ port_ssh_selinux }}"
     proto: tcp
     setype: ssh_port_t
     state: present
@@ -36,29 +26,17 @@
 - name: Enable SELinux
   ansible.posix.selinux:
     policy: targeted
-    state: enforcing
+    state: "{{ state_finish_selinux }}"
   register: result
 
-- name: Reboot immediately if there was a change.
-  shell: "sleep 5 && reboot"
-  async: 1
-  poll: 0
-  when: result is succeeded
-
-- name: Wait for the reboot to complete if there was a change.
-  wait_for_connection:
-    connect_timeout: 20
-    sleep: 5
-    delay: 5
-    timeout: 100
-  when: result is succeeded
-
-
+- name: Reboot machine post SELinux Enforcing
+  reboot:
+    pre_reboot_delay: 5
+    reboot_timeout: 100
 
 # - name: Disable Special Permissions
 #   ansible.builtin.command: rttahc -a /usr/local/dcon/users_historylogs/*
 
-  
 # - name: Setting SELinux Context
 #   community.general.sefcontext:
 #     target: '/usr/local/dcon/users_historylogs(/.*)?'

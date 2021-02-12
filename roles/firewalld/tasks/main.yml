@@ -7,12 +7,12 @@
 #   package: 
 #     name: python3-firewall
 
-- name: Alterar porta default service ssh firewalld
+- name: Alterar porta default service ssh FirewallD
   xml:
     path: /usr/lib/firewalld/services/ssh.xml
     xpath: /service/port
     attribute: port
-    value: '12235'
+    value: "{{ port_ssh_xml_firewalld }}"
 
 - name: Enable FirewallD
   service:
@@ -22,37 +22,13 @@
 
 - name: Enable Ports SSH FirewallD
   ansible.posix.firewalld:
-    port: 12235/tcp
+    port: "{{ item }}"
     zone: public
     permanent: yes
     state: enabled
+  with_items: "{{ ports_allow_firewalld }}"
 
-# - name: Enable Services FirewallD
-#   ansible.posix.firewalld:
-#     service: 
-#       - zabbix-agent
-#       - jboss
-#       - ssh
-#       - gluster
-#     zone: public
-#     permanent: yes
-#     state: enabled
-
-- name: Enable Ports PGPool-II
-  ansible.posix.firewalld:
-    port: "{{ item }}" 
-    zone: public
-    #imediate: yes
-    permanent: yes
-    state: enabled
-  with_items:
-    - 48000-48010/tcp
-    - 8444-8446/tcp
-    - 8081-8084/tcp
-    - 1999/tcp
-    - 9898/tcp
-
-- name: reload service firewalld
+- name: Reload FirewallD - Apply Changes
   systemd:
     name: firewalld
     state: reloaded

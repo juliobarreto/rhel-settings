@@ -1,24 +1,27 @@
 ---
+- name: Yum Clean All
+  ansible.builtin.command: "yum clean all"
+
 - name: YUM - Update Bugfix Packages
-  yum:
+  ansible.builtin.:
     name: '*'
     state: latest
-    bugfix: yes
+    bugfix: Yes
     exclude: 'glusterfs*'
     update_cache: true
   register: yum_output  
 
 - name: YUM - Update Security Packages
-  yum:
+  ansible.builtin.:
     name: '*'
     state: latest
-    security: yes
+    security: Yes
     exclude: 'glusterfs*'
     update_cache: true
   register: yum_output  
 
 - name: YUM - Update All Packages
-  yum:
+  ansible.builtin.:
     name: '*'
     state: latest
     exclude: 'glusterfs*'
@@ -29,3 +32,8 @@
   debug: 
     var: yum_output.results
     verbosity: 2
+
+- name: Reboot Machine Post Yum Updates
+  reboot:
+    pre_reboot_delay: 5
+    reboot_timeout: 100

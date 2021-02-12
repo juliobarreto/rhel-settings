@@ -1,2 +1,10 @@
 ---
 # vars file for firewalld
+port_ssh_xml_firewalld: '12235'
+ports_allow_firewalld:
+  - 12235/tcp
+  - 48000-48010/tcp
+  - 8444-8446/tcp
+  - 8081-8084/tcp
+  - 1999/tcp
+  - 9898/tcp
