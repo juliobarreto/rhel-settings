@@ -27,8 +27,6 @@
     permanent: yes
     state: enabled
   with_items: "{{ ports_allow_firewalld }}"
+  notify:
+    - Reload FirewallD
 
-- name: Reload FirewallD - Apply Changes
-  systemd:
-    name: firewalld
-    state: reloaded

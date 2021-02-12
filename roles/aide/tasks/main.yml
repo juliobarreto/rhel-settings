@@ -1,2 +1,23 @@
 ---
-# tasks file for aide
+- name: Install AIDE
+  yum:
+    name: aide
+    state: latest 
+
+- name: Alterar arquivo aide.conf
+  ansible.builtin.lineinfile:
+    path: /etc/aide.conf
+    regexp: '^# Ignore'
+    insertbefore: '# Ignore JBOSS LOGS'
+    line: '!/opt/jboss-eap-7.1/standalone/log/'
+  notify:
+    - AIDE Inicial
+
+- name: Cron aide check
+  ansible.builtin.cron:
+    name: "check dirs"
+    minute: "0"
+    hour: "23"
+    user: root
+    job: "aide --check"
+    cron_file: aide-check

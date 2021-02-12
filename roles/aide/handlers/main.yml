@@ -1,2 +1,11 @@
 ---
 # handlers file for aide
+- name: AIDE Inicial
+   ansible.builtin.command: /usr/bin/aide -c /etc/aide/aide.conf --init
+   notify:
+   - mover database
+
+- name: mover database
+  ansible.builtin.copy:
+    src: /var/lib/aide/{{ aide_new_db }}
+    dst: /var/lib/aide/{{ aide_db }}
