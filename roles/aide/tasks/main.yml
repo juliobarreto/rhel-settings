@@ -4,20 +4,40 @@
     name: aide
     state: latest 
 
+- name: Cron aide check
+  ansible.builtin.cron:
+    name: "aide check"
+    minute: "0"
+    hour: "23"
+    user: root
+    job: "aide --check"
+    cron_file: aide-check
+
+- name: Cron aide update
+  ansible.builtin.cron:
+    name: "aide update"
+    weekday: "0"
+    minute: "0"
+    hour: "07"
+    user: root
+    job: "aide --update"
+    cron_file: aide-update
+
+- name: Move aide bd
+  ansible.builtin.cron:
+    name: "aide db"
+    weekday: "0"
+    minute: "0"
+    hour: "15"
+    user: root
+    job: "mv /var/lib/aide/aide.db.new.gz /var/lib/aide/aide.db.gz"
+    cron_file: aide-db 
+
 - name: Alterar arquivo aide.conf
   ansible.builtin.lineinfile:
     path: /etc/aide.conf
     regexp: '^# Ignore'
     insertbefore: '# Ignore JBOSS LOGS'
     line: '!/opt/jboss-eap-7.1/standalone/log/'
-  notify:
-    - AIDE Inicial
-
-- name: Cron aide check
-  ansible.builtin.cron:
-    name: "check dirs"
-    minute: "0"
-    hour: "23"
-    user: root
-    job: "aide --check"
-    cron_file: aide-check
+  notify: 
+  - Execute aide

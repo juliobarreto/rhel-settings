@@ -6,7 +6,8 @@
   become: yes
   become_method: sudo
   roles:
-    - defaults
+  #  - defaults
   #  - yum
-    - selinux
-    - firewalld
+  #  - selinux
+  #  - firewalld
+    - aide
