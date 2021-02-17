@@ -3,7 +3,7 @@
   ansible.builtin.command: "yum clean all"
 
 - name: YUM - Update Bugfix Packages
-  ansible.builtin.:
+  ansible.builtin.yum:
     name: '*'
     state: latest
     bugfix: Yes
@@ -12,7 +12,7 @@
   register: yum_output  
 
 - name: YUM - Update Security Packages
-  ansible.builtin.:
+  ansible.builtin.yum:
     name: '*'
     state: latest
     security: Yes
@@ -21,7 +21,7 @@
   register: yum_output  
 
 - name: YUM - Update All Packages
-  ansible.builtin.:
+  ansible.builtin.yum:
     name: '*'
     state: latest
     exclude: 'glusterfs*'
