@@ -9,7 +9,10 @@
     bugfix: Yes
     exclude: 'glusterfs*'
     update_cache: true
-  register: yum_output  
+  register: yum_output_bugfix  
+
+- name: Yum Clean All
+  ansible.builtin.command: "yum clean all"
 
 - name: YUM - Update Security Packages
   ansible.builtin.yum:
@@ -18,7 +21,10 @@
     security: Yes
     exclude: 'glusterfs*'
     update_cache: true
-  register: yum_output  
+  register: yum_output_security  
+
+- name: Yum Clean All
+  ansible.builtin.command: "yum clean all"
 
 - name: YUM - Update All Packages
   ansible.builtin.yum:
@@ -26,12 +32,10 @@
     state: latest
     exclude: 'glusterfs*'
     update_cache: true
-  register: yum_output  
+  register: yum_output_other  
 
-- name: Display yum output
-  debug: 
-    var: yum_output.results
-    verbosity: 2
+- name: Yum Clean All
+  ansible.builtin.command: "yum clean all"
 
 - name: Reboot Machine Post Yum Updates
   reboot:

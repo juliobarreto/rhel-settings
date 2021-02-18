@@ -13,12 +13,14 @@
     xpath: /service/port
     attribute: port
     value: "{{ port_ssh_xml_firewalld }}"
+  register: firewalld_ssh_port_default
 
 - name: Enable FirewallD
   service:
     name: firewalld
     state: started
     enabled: yes
+  register: firewalld_service_status
 
 - name: Enable Ports SSH FirewallD
   ansible.posix.firewalld:
@@ -29,4 +31,4 @@
   with_items: "{{ ports_allow_firewalld }}"
   notify:
     - Reload FirewallD
-
+  register: firewalld_ports_allow

@@ -1,0 +1,61 @@
+{% block yum %}
+##################################################################
+                REPORT UPDATED {{ ansible_hostname }}             
+##################################################################
+
+- Yum Updated Bugfix:
+
+{% for host in ansible_play_batch %}
+{% if hostvars[host].yum_output_bugfix.changes is defined %}
+{% for i in  hostvars[host].yum_output_bugfix.changes.updated %}
+{%- set count = 1 - loop.index -%}
+{{ hostvars[host].yum_output_bugfix.changes.updated[count][0] }}
+{% endfor %}
+{% endif%}
+{% endfor %}
+
+-------------------------------------------------------------------
+
+- Yum Updated Security:
+
+{% for host in ansible_play_batch %}
+{% if hostvars[host].yum_output_security.changes is defined %}
+{% for i in  hostvars[host].yum_output_security.changes.updated %}
+{%- set count = 1 - loop.index -%}
+{{ hostvars[host].yum_output_security.changes.updated[count][0] }}
+{% endfor %}
+{% endif%}
+{% endfor %}
+
+-------------------------------------------------------------------
+
+- Yum Updated Other Packages:
+
+{% for host in ansible_play_batch %}
+{% if hostvars[host].yum_output_other.changes is defined %}
+{% for i in  hostvars[host].yum_output_other.changes.updated %}
+{%- set count = 1 - loop.index -%}
+{{ hostvars[host].yum_output_other.changes.updated[count][0] }}
+{% endfor %}
+{% endif%}
+{% endfor %}
+
+-------------------------------------------------------------------
+{% endblock %}
+
+{% block firewalld %}
+##################################################################
+                REPORT FIREWALLD {{ ansible_hostname }}             
+##################################################################
+
+- Realizada a alteração da porta default serviço ssh (22/TCP) no FirewallD: {{ firewalld_ssh_port_default.changed }}
+
+- Serviço: {{ firewalld_service_status.name }} Status: {{ firewalld_service_status.state }}
+
+- Allowed Ports:
+{% for i in  firewalld_ports_allow.results %}
+{{ i.msg }}
+{% endfor %}
+
+
+{% endblock %}
