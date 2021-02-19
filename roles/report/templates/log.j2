@@ -79,13 +79,8 @@
 
 - Realizada a instalação/atualização dos pacotes: 
 
-{% for host in ansible_play_batch %}
-{% if hostvars[host].selinux_tools_status.item.changes is defined %}
-{% for i in  hostvars[host].selinux_tools_status.item.changes.installed %}
-{%- set count = 1 - loop.index -%}
-{{ hostvars[host].selinux_tools_status.changes.item.installed[count][0] }}
-{% endfor %}
-{% endif%}
+{% for i in  selinux_tools_status.results %}
+{{ i.item }}
 {% endfor %}
 
 - SELinux alterado para {{ selinux_permissive_status.state }}
