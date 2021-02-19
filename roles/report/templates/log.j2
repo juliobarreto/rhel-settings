@@ -59,3 +59,39 @@
 
 
 {% endblock %}
+
+{% block kdump %}
+##################################################################
+                REPORT KDUMP {{ ansible_hostname }}             
+##################################################################
+
+- Realizada a instalação/atualização do pacote: {{ kexec_tools_status.results }}
+
+- Serviço: {{ kdump_service_status.name }} Status: {{ kdump_service_status.state }}
+
+
+{% endblock %}
+
+{% block selinux %}
+##################################################################
+                REPORT SELINUX {{ ansible_hostname }}             
+##################################################################
+
+- Realizada a instalação/atualização dos pacotes: 
+
+{% for host in ansible_play_batch %}
+{% if hostvars[host].selinux_tools_status.item.changes is defined %}
+{% for i in  hostvars[host].selinux_tools_status.item.changes.installed %}
+{%- set count = 1 - loop.index -%}
+{{ hostvars[host].selinux_tools_status.changes.item.installed[count][0] }}
+{% endfor %}
+{% endif%}
+{% endfor %}
+
+- SELinux alterado para {{ selinux_permissive_status.state }}
+
+- Realizada liberação de porta SSH no SELinux: {{selinux_ssh_port.ports }} | {{ selinux_ssh_port.setype }} | {{ selinux_ssh_port.state }}
+
+- SELinux alterado para {{ selinux_enforcing_status.state }}
+
+{% endblock %}

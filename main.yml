@@ -8,8 +8,8 @@
   roles:
     - defaults
     - yum
-    #- selinux
+    - selinux
     - firewalld
     #- aide
-    #- kdump
+    - kdump
     - report

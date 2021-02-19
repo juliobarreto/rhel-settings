@@ -4,9 +4,11 @@
   package:
     name: kexec-tools
     state: present
+  register: kexec_tools_status
 
 - name: Enable KDUMP
-  service:
+  systemd:
     name: kdump
     state: started
-    enable: yes
+    enabled: yes
+  register: kdump_service_status

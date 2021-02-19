@@ -4,12 +4,13 @@
     name: "{{ item }}"
     state: latest
   with_items: "{{ selinux_tools_packages }}"
+  register: selinux_tools_status
 
 - name: Enable SELinux
   ansible.posix.selinux:
     policy: targeted
     state: "{{ state_first_selinux }}"
-  register: result
+  register: selinux_permissive_status
 
 - name: Reboot machine post SELinux Permissive
   reboot:
@@ -22,17 +23,36 @@
     proto: tcp
     setype: ssh_port_t
     state: present
+  register: selinux_ssh_port
 
 - name: Enable SELinux
   ansible.posix.selinux:
     policy: targeted
     state: "{{ state_finish_selinux }}"
-  register: result
+  register: selinux_enforcing_status
 
 - name: Reboot machine post SELinux Enforcing
   reboot:
     pre_reboot_delay: 5
     reboot_timeout: 100
+
+
+# - name: debug selinux tools
+#   debug:
+#     msg: "{{selinux_tools_status}}"
+
+# - name: debug selinux permissive
+#   debug:
+#     msg: "{{selinux_permissive_status}}"
+
+# - name: debug selinux ssh port
+#   debug:
+#     msg: "{{selinux_ssh_port}}"
+
+# - name: debug selinux enforcing
+#   debug:
+#     msg: "{{selinux_enforcing_status}}"
+
 
 # - name: Disable Special Permissions
 #   ansible.builtin.command: rttahc -a /usr/local/dcon/users_historylogs/*
