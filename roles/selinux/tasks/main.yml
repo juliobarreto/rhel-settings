@@ -30,23 +30,23 @@
   register: selinux_ssh_port
 
 # - name: Disable Special Permissions
-#   ansible.builtin.command: rttahc -a /usr/local/dcon/users_historylogs/*
+#   command: rttahc -a /usr/local/dcon/users_historylogs/*
 
 # - name: Setting SELinux Context
-#   community.general.sefcontext:
+#   sefcontext:
 #     target: '/usr/local/dcon/users_historylogs(/.*)?'
 #     seuser: system_u
 #     setype: usr_t
 #     state: present
 
 # - name: Apply new SELinux file context to filesystem
-#   ansible.builtin.command: restorecon -R -v /usr/local/dcon/users_historylogs
+#   command: restorecon -R -v /usr/local/dcon/users_historylogs
 #   register: restorecon_cmd
 #   changed_when: '"Would relabel" in restorecon_cmd.stdout'
 #   check_mode: no
 
 # - name: Enable Special Permissions
-#   ansible.builtin.command: rttahc +a /usr/local/dcon/users_historylogs/*
+#   command: rttahc +a /usr/local/dcon/users_historylogs/*
 
 - name: Enable SELinux
   selinux:
@@ -58,21 +58,3 @@
   reboot:
     pre_reboot_delay: 5
     reboot_timeout: 100
-
-
-# - name: debug selinux tools
-#   debug:
-#     msg: "{{selinux_tools_status}}"
-
-# - name: debug selinux permissive
-#   debug:
-#     msg: "{{selinux_permissive_status}}"
-
-# - name: debug selinux ssh port
-#   debug:
-#     msg: "{{selinux_ssh_port}}"
-
-# - name: debug selinux enforcing
-#   debug:
-#     msg: "{{selinux_enforcing_status}}"
-
