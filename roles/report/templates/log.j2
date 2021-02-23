@@ -3,44 +3,73 @@
                 REPORT UPDATED {{ ansible_hostname }}             
 ##################################################################
 
-- Yum Updated Bugfix:
+- Yum Bugfix Updated:
 
-{% for host in ansible_play_batch %}
-{% if hostvars[host].yum_output_bugfix.changes is defined %}
-{% for i in  hostvars[host].yum_output_bugfix.changes.updated %}
+{% if yum_output_bugfix.changes is defined %}
+{% for i in yum_output_bugfix.changes.updated %}
 {%- set count = 1 - loop.index -%}
-{{ hostvars[host].yum_output_bugfix.changes.updated[count][0] }}
+{{ yum_output_bugfix.changes.updated[count][0] }}
 {% endfor %}
 {% endif%}
-{% endfor %}
 
--------------------------------------------------------------------
+-----------------------------------------------------
 
-- Yum Updated Security:
+- Yum Bugfix Installed:
 
-{% for host in ansible_play_batch %}
-{% if hostvars[host].yum_output_security.changes is defined %}
-{% for i in  hostvars[host].yum_output_security.changes.updated %}
+{% if yum_output_bugfix.changes is defined %}
+{% for i in yum_output_bugfix.changes.installed %}
 {%- set count = 1 - loop.index -%}
-{{ hostvars[host].yum_output_security.changes.updated[count][0] }}
+{{ yum_output_bugfix.changes.installed[count][0] }}
 {% endfor %}
 {% endif%}
-{% endfor %}
 
--------------------------------------------------------------------
 
-- Yum Updated Other Packages:
+##################################################################
 
-{% for host in ansible_play_batch %}
-{% if hostvars[host].yum_output_other.changes is defined %}
-{% for i in  hostvars[host].yum_output_other.changes.updated %}
+- Yum Security Updated:
+
+{% if yum_output_security.changes is defined %}
+{% for i in yum_output_security.changes.updated %}
 {%- set count = 1 - loop.index -%}
-{{ hostvars[host].yum_output_other.changes.updated[count][0] }}
+{{ yum_output_security.changes.updated[count][0] }}
 {% endfor %}
 {% endif%}
-{% endfor %}
 
--------------------------------------------------------------------
+-----------------------------------------------------
+
+- Yum Security Installed:
+
+{% if yum_output_security.changes is defined %}
+{% for i in yum_output_security.changes.installed %}
+{%- set count = 1 - loop.index -%}
+{{ yum_output_security.changes.installed[count][0] }}
+{% endfor %}
+{% endif%}
+
+
+##################################################################
+
+- Yum Other Packages Updated:
+
+{% if yum_output_other.changes is defined %}
+{% for i in yum_output_other.changes.updated %}
+{%- set count = 1 - loop.index -%}
+{{ yum_output_other.changes.updated[count][0] }}
+{% endfor %}
+{% endif%}
+
+-----------------------------------------------------
+
+- Yum Other Packages Installed:
+
+{% if yum_output_other.changes is defined %}
+{% for i in yum_output_other.changes.installed %}
+{%- set count = 1 - loop.index -%}
+{{ yum_output_other.changes.installed[count][0] }}
+{% endfor %}
+{% endif%}
+
+
 {% endblock %}
 
 {% block firewalld %}

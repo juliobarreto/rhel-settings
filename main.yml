@@ -7,9 +7,9 @@
   become_method: sudo
   roles:
     - defaults
-    - yum
     - selinux
+    - yum
     - firewalld
-    #- aide
+    - aide
     - kdump
     - report

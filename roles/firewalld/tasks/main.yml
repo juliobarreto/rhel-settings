@@ -23,7 +23,7 @@
   register: firewalld_service_status
 
 - name: Enable Ports SSH FirewallD
-  ansible.posix.firewalld:
+  firewalld:
     port: "{{ item }}"
     zone: public
     permanent: yes
@@ -32,3 +32,6 @@
   notify:
     - Reload FirewallD
   register: firewalld_ports_allow
+
+- name: Flush handlers
+  meta: flush_handlers

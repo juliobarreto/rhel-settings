@@ -1,13 +1,6 @@
 ---
-- name: Install SELinux python3 tools
-  ansible.builtin.package:
-    name: "{{ item }}"
-    state: latest
-  with_items: "{{ selinux_tools_packages }}"
-  register: selinux_tools_status
-
 - name: Enable SELinux
-  ansible.posix.selinux:
+  selinux:
     policy: targeted
     state: "{{ state_first_selinux }}"
   register: selinux_permissive_status
@@ -17,8 +10,19 @@
     pre_reboot_delay: 5
     reboot_timeout: 100
 
+- name: Subscription Manager Refresh
+  command: subscription-manager refresh
+  
+      
+- name: Install SELinux python3 tools
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items: "{{ selinux_tools_packages }}"
+  register: selinux_tools_status
+
 - name: Enable SSH Port SELinux
-  community.general.seport:
+  seport:
     ports: "{{ port_ssh_selinux }}"
     proto: tcp
     setype: ssh_port_t
@@ -26,7 +30,7 @@
   register: selinux_ssh_port
 
 - name: Enable SELinux
-  ansible.posix.selinux:
+  selinux:
     policy: targeted
     state: "{{ state_finish_selinux }}"
   register: selinux_enforcing_status

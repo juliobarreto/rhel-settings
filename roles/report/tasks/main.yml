@@ -1,6 +1,6 @@
 ---
 - name: Report Playbook
-  ansible.builtin.template:
+  template:
     src: templates/log.j2
     dest: /root/ansible_playbook.log
 
