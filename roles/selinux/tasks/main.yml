@@ -29,7 +29,7 @@
   register: selinux_ssh_port
 
 - name: Disable Special Permissions
-  command: rttahc -a /usr/local/dcon/users_historylogs/*
+  command: /bin/rttahc -a /usr/local/dcon/users_historylogs/*
 
 - name: Setting SELinux Context
   sefcontext:
@@ -45,7 +45,7 @@
   check_mode: no
 
 - name: Enable Special Permissions
-  command: rttahc +a /usr/local/dcon/users_historylogs/*
+  command: /bin/rttahc +a /usr/local/dcon/users_historylogs/*
 
 - name: Enable SELinux
   selinux:
