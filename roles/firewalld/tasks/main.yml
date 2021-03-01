@@ -3,10 +3,6 @@
   package: 
     name: firewalld
 
-- name: Install python3-firewall
-  package: 
-    name: python3-firewall
-
 - name: Alterar porta default service ssh FirewallD
   xml:
     path: /usr/lib/firewalld/services/ssh.xml
