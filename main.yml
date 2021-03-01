@@ -1,5 +1,5 @@
 ---
-- hosts: servidores
+- hosts: all
   gather_facts: true
   connection: ssh
   name: Automation Settings RHEL
