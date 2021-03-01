@@ -1,4 +1,13 @@
 ---
+
+- name: Diretorio temporario yum
+  file:
+    path: /opt/yum/x86_64/7Server
+    owner: root
+    group: root
+    state: directory
+    mode: u+rx,g-rx,o-rwx
+
 - name: Subscription Manager Refresh
   command: subscription-manager refresh
   
@@ -8,6 +17,7 @@
 - name: YUM - Update Bugfix Packages
   yum:
     name: '*'
+    conf_file: files/yum.conf
     state: latest
     bugfix: Yes
     exclude: 'glusterfs*'
@@ -20,6 +30,7 @@
 - name: YUM - Update Security Packages
   yum:
     name: '*'
+    conf_file: files/yum.conf
     state: latest
     security: Yes
     exclude: 'glusterfs*'
@@ -32,6 +43,7 @@
 - name: YUM - Update All Packages
   yum:
     name: '*'
+    conf_file: files/yum.conf
     state: latest
     exclude: 'glusterfs*'
     # update_cache: true
@@ -39,6 +51,11 @@
 
 - name: Yum Clean All
   shell: "yum clean all"
+
+- name: Apagar Diretorio Temporario
+  file:
+    path: /opt/yum/x86_64/7Server
+    state: absent
 
 - name: Reboot Machine Post Yum Updates
   reboot:
