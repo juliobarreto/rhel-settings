@@ -29,7 +29,7 @@
   register: selinux_ssh_port
 
 - name: Disable Special Permissions
-  command: /bin/rttahc -a /usr/local/dcon/users_historylogs/*
+  shell: /bin/rttahc -a /usr/local/dcon/users_historylogs/*
 
 - name: Setting SELinux Context
   sefcontext:
@@ -39,13 +39,13 @@
     state: present
 
 - name: Apply new SELinux file context to filesystem
-  command: restorecon -R -v /usr/local/dcon/users_historylogs
-  register: restorecon_cmd
-  changed_when: '"Would relabel" in restorecon_cmd.stdout'
-  check_mode: no
+  shell: restorecon -R -v /usr/local/dcon/users_historylogs
+  # register: restorecon_cmd
+  # changed_when: '"Would relabel" in restorecon_cmd.stdout'
+  # check_mode: no
 
 - name: Enable Special Permissions
-  command: /bin/rttahc +a /usr/local/dcon/users_historylogs/*
+  shell: /bin/rttahc +a /usr/local/dcon/users_historylogs/*
 
 - name: Enable SELinux
   selinux:
