@@ -8,7 +8,7 @@
 - name: Reboot machine post SELinux Permissive
   reboot:
     pre_reboot_delay: 5
-    reboot_timeout: 100
+    reboot_timeout: 300
 
 - name: Subscription Manager Refresh
   command: subscription-manager refresh
@@ -56,4 +56,4 @@
 - name: Reboot machine post SELinux Enforcing
   reboot:
     pre_reboot_delay: 5
-    reboot_timeout: 100
+    reboot_timeout: 300

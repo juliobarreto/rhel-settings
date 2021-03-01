@@ -43,4 +43,4 @@
 - name: Reboot Machine Post Yum Updates
   reboot:
     pre_reboot_delay: 5
-    reboot_timeout: 100
+    reboot_timeout: 300
