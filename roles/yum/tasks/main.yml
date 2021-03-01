@@ -11,7 +11,7 @@
     state: latest
     bugfix: Yes
     exclude: 'glusterfs*'
-    update_cache: true
+    # update_cache: true
   register: yum_output_bugfix  
 
 - name: Yum Clean All
@@ -23,7 +23,7 @@
     state: latest
     security: Yes
     exclude: 'glusterfs*'
-    update_cache: true
+    # update_cache: true
   register: yum_output_security  
 
 - name: Yum Clean All
@@ -34,7 +34,7 @@
     name: '*'
     state: latest
     exclude: 'glusterfs*'
-    update_cache: true
+    # update_cache: true
   register: yum_output_other  
 
 - name: Yum Clean All
