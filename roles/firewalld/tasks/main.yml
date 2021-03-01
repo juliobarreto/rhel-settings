@@ -20,7 +20,7 @@
 
 - name: Enable Services FirewallD
   firewalld:
-    port: "{{ item }}"
+    service: "{{ item }}"
     zone: public
     permanent: yes
     state: enabled
