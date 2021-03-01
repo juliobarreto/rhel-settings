@@ -8,6 +8,11 @@
     state: directory
     mode: u+rx,g-rx,o-rwx
 
+- name: copiar arquivo de confg temporario
+  copy:
+    src: files/yum.conf
+    dest: /opt/yum/yum.conf
+
 - name: Subscription Manager Refresh
   command: subscription-manager refresh
   
@@ -17,11 +22,10 @@
 - name: YUM - Update Bugfix Packages
   yum:
     name: '*'
-    conf_file: files/yum.conf
+    conf_file: /opt/yum/yum.conf
     state: latest
     bugfix: Yes
     exclude: 'glusterfs*'
-    # update_cache: true
   register: yum_output_bugfix  
 
 - name: Yum Clean All
@@ -30,11 +34,10 @@
 - name: YUM - Update Security Packages
   yum:
     name: '*'
-    conf_file: files/yum.conf
+    conf_file: /opt/yum/yum.conf
     state: latest
     security: Yes
     exclude: 'glusterfs*'
-    # update_cache: true
   register: yum_output_security  
 
 - name: Yum Clean All
@@ -43,21 +46,20 @@
 - name: YUM - Update All Packages
   yum:
     name: '*'
-    conf_file: files/yum.conf
+    conf_file: /opt/yum/yum.conf
     state: latest
     exclude: 'glusterfs*'
-    # update_cache: true
   register: yum_output_other  
 
 - name: Yum Clean All
   shell: "yum clean all"
 
-- name: Apagar Diretorio Temporario
-  file:
-    path: /opt/yum/x86_64/7Server
-    state: absent
-
 - name: Reboot Machine Post Yum Updates
   reboot:
     pre_reboot_delay: 5
     reboot_timeout: 500
+
+- name: Apagar Diretorio Temporario
+  file:
+    path: /opt/yum/x86_64/7Server
+    state: absent
