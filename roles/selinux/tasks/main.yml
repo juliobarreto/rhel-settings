@@ -12,8 +12,7 @@
 
 - name: Subscription Manager Refresh
   command: subscription-manager refresh
-  
-      
+        
 - name: Install SELinux python3 tools
   package:
     name: "{{ item }}"
@@ -29,24 +28,24 @@
     state: present
   register: selinux_ssh_port
 
-# - name: Disable Special Permissions
-#   command: rttahc -a /usr/local/dcon/users_historylogs/*
+- name: Disable Special Permissions
+  command: rttahc -a /usr/local/dcon/users_historylogs/*
 
-# - name: Setting SELinux Context
-#   sefcontext:
-#     target: '/usr/local/dcon/users_historylogs(/.*)?'
-#     seuser: system_u
-#     setype: usr_t
-#     state: present
+- name: Setting SELinux Context
+  sefcontext:
+    target: '/usr/local/dcon/users_historylogs(/.*)?'
+    seuser: system_u
+    setype: usr_t
+    state: present
 
-# - name: Apply new SELinux file context to filesystem
-#   command: restorecon -R -v /usr/local/dcon/users_historylogs
-#   register: restorecon_cmd
-#   changed_when: '"Would relabel" in restorecon_cmd.stdout'
-#   check_mode: no
+- name: Apply new SELinux file context to filesystem
+  command: restorecon -R -v /usr/local/dcon/users_historylogs
+  register: restorecon_cmd
+  changed_when: '"Would relabel" in restorecon_cmd.stdout'
+  check_mode: no
 
-# - name: Enable Special Permissions
-#   command: rttahc +a /usr/local/dcon/users_historylogs/*
+- name: Enable Special Permissions
+  command: rttahc +a /usr/local/dcon/users_historylogs/*
 
 - name: Enable SELinux
   selinux:

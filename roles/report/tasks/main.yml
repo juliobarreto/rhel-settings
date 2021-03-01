@@ -2,26 +2,4 @@
 - name: Report Playbook
   template:
     src: templates/log.j2
-    dest: /root/ansible_playbook.log
-
-# - name: Output yum playbooks - 1
-#   debug:
-#     msg: "{{ yum_output }}"
-
-# - name: Output yum playbooks - 2
-#   debug:
-#     msg: "{{ yum_output }}"
-
-# - name: Gerar report
-#   copy:
-#     dest: /home/zmaciel/yum_bugfix.log
-#     content: "{{ yum_output }}"
-#   delegate_to: 192.168.1.7
-
-# - name: Write results
-#   blockinfile:
-#     create: yes
-#     path: "/home/zmaciel/{{ inventory_hostname }}.log"
-#     marker: "# Playbook YUM {mark}"
-#     block: "{{ yum_output.results.split('\\n')[0] }}"
-#   delegate_to: 192.168.1.7
+    dest: /var/log/ansible_playbook_ajustes.log
