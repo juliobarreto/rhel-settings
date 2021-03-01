@@ -61,5 +61,5 @@
 
 - name: Apagar Diretorio Temporario
   file:
-    path: /opt/yum/x86_64/7Server
+    path: /opt/yum
     state: absent

@@ -18,7 +18,16 @@
     enabled: yes
   register: firewalld_service_status
 
-- name: Enable Ports SSH FirewallD
+- name: Enable Services FirewallD
+  firewalld:
+    port: "{{ item }}"
+    zone: public
+    permanent: yes
+    state: enabled
+  with_items: "{{ services_allow_firewalld }}"
+  register: firewalld_services_allow
+
+- name: Enable Ports FirewallD
   firewalld:
     port: "{{ item }}"
     zone: public

@@ -81,6 +81,11 @@
 
 - Serviço: {{ firewalld_service_status.name }} Status: {{ firewalld_service_status.state }}
 
+- Allowed Services:
+{% for i in  firewalld_services_allow.results %}
+{{ i.msg }}
+{% endfor %}
+
 - Allowed Ports:
 {% for i in  firewalld_ports_allow.results %}
 {{ i.msg }}

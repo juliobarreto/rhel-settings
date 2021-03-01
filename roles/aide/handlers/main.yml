@@ -1,9 +1,9 @@
 ---
 # handlers file for aide
 - name: Execute aide
-  command: /sbin/aide --init
+  shell: /sbin/aide --init
   notify: 
   - mover database
 
 - name: mover database
-  ansible.builtin.command: mv /var/lib/aide/{{ aide_new_db }} /var/lib/aide/{{ aide_db }}
+  shell: mv /var/lib/aide/{{ aide_new_db }} /var/lib/aide/{{ aide_db }}
