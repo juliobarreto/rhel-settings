@@ -3,7 +3,7 @@
   command: subscription-manager refresh
   
 - name: Yum Clean All
-  command: "yum clean all"
+  shell: "yum clean all"
 
 - name: YUM - Update Bugfix Packages
   yum:
@@ -15,7 +15,7 @@
   register: yum_output_bugfix  
 
 - name: Yum Clean All
-  command: "yum clean all"
+  shell: "yum clean all"
 
 - name: YUM - Update Security Packages
   yum:
@@ -27,7 +27,7 @@
   register: yum_output_security  
 
 - name: Yum Clean All
-  command: "yum clean all"
+  shell: "yum clean all"
 
 - name: YUM - Update All Packages
   yum:
@@ -38,7 +38,7 @@
   register: yum_output_other  
 
 - name: Yum Clean All
-  command: "yum clean all"
+  shell: "yum clean all"
 
 - name: Reboot Machine Post Yum Updates
   reboot:
