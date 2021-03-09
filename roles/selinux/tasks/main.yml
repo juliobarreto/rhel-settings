@@ -32,14 +32,10 @@
   shell: /bin/rttahc -a /usr/local/dcon/users_historylogs/*
 
 - name: Setting SELinux Context
-  sefcontext:
-    target: '/usr/local/dcon/users_historylogs(/.*)?'
-    seuser: system_u
-    setype: usr_t
-    state: present
+  shell: semanage fcontext -a -t usr_t -s system_u "/usr/local/dcon/users_historylogs(/.*)?"
 
 - name: Apply new SELinux file context to filesystem
-  shell: restorecon -R -v /usr/local/dcon/users_historylogs/*
+  shell: restorecon -vF /usr/local/dcon/users_historylogs/*
 
 - name: Enable Special Permissions
   shell: /bin/rttahc +a /usr/local/dcon/users_historylogs/*
@@ -54,3 +50,5 @@
 #   reboot:
 #     pre_reboot_delay: 5
 #     reboot_timeout: 500
+
+semanage fcontext -a -t system_u:object_r:usr_t:s0 "/usr/local/dcon/users_historylogs(/.*)?"
