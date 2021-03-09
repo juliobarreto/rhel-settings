@@ -28,6 +28,14 @@
     state: present
   register: selinux_ssh_port
 
+- name: Enable PGPOOL Port SELinux
+  seport:
+    ports: "{{ port_pgpool_selinux }}"
+    proto: tcp
+    setype: postgresql_port_t
+    state: present
+  register: selinux_pgpool_port
+
 - name: Disable Special Permissions
   shell: /bin/rttahc -a /usr/local/dcon/users_historylogs/*
 
