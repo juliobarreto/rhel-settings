@@ -35,7 +35,7 @@
   shell: semanage fcontext -a -t usr_t -s system_u "/usr/local/dcon/users_historylogs(/.*)?"
 
 - name: Apply new SELinux file context to filesystem
-  shell: restorecon -vF /usr/local/dcon/users_historylogs/*
+  shell: restorecon -vRF /usr/local/dcon/users_historylogs/
 
 - name: Enable Special Permissions
   shell: /bin/rttahc +a /usr/local/dcon/users_historylogs/*
