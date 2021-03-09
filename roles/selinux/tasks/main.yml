@@ -1,32 +1,32 @@
 ---
-# - name: Enable SELinux
-#   selinux:
-#     policy: targeted
-#     state: "{{ state_first_selinux }}"
-#   register: selinux_permissive_status
+- name: Enable SELinux
+  selinux:
+    policy: targeted
+    state: "{{ state_first_selinux }}"
+  register: selinux_permissive_status
 
-# - name: Reboot machine post SELinux Permissive
-#   reboot:
-#     pre_reboot_delay: 5
-#     reboot_timeout: 500
+- name: Reboot machine post SELinux Permissive
+  reboot:
+    pre_reboot_delay: 5
+    reboot_timeout: 500
 
-# - name: Subscription Manager Refresh
-#   command: subscription-manager refresh
+- name: Subscription Manager Refresh
+  command: subscription-manager refresh
         
-# - name: Install SELinux python3 tools
-#   package:
-#     name: "{{ item }}"
-#     state: latest
-#   with_items: "{{ selinux_tools_packages }}"
-#   register: selinux_tools_status
+- name: Install SELinux python3 tools
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items: "{{ selinux_tools_packages }}"
+  register: selinux_tools_status
 
-# - name: Enable SSH Port SELinux
-#   seport:
-#     ports: "{{ port_ssh_selinux }}"
-#     proto: tcp
-#     setype: ssh_port_t
-#     state: present
-#   register: selinux_ssh_port
+- name: Enable SSH Port SELinux
+  seport:
+    ports: "{{ port_ssh_selinux }}"
+    proto: tcp
+    setype: ssh_port_t
+    state: present
+  register: selinux_ssh_port
 
 - name: Disable Special Permissions
   shell: /bin/rttahc -a /usr/local/dcon/users_historylogs/*
@@ -40,13 +40,13 @@
 - name: Enable Special Permissions
   shell: /bin/rttahc +a /usr/local/dcon/users_historylogs/*
 
-# - name: Enable SELinux
-#   selinux:
-#     policy: targeted
-#     state: "{{ state_finish_selinux }}"
-#   register: selinux_enforcing_status
+- name: Enable SELinux
+  selinux:
+    policy: targeted
+    state: "{{ state_finish_selinux }}"
+  register: selinux_enforcing_status
 
-# - name: Reboot machine post SELinux Enforcing
-#   reboot:
-#     pre_reboot_delay: 5
-#     reboot_timeout: 500
+- name: Reboot machine post SELinux Enforcing
+  reboot:
+    pre_reboot_delay: 5
+    reboot_timeout: 500
