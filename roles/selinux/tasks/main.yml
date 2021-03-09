@@ -50,5 +50,3 @@
 #   reboot:
 #     pre_reboot_delay: 5
 #     reboot_timeout: 500
-
-semanage fcontext -a -t system_u:object_r:usr_t:s0 "/usr/local/dcon/users_historylogs(/.*)?"
