@@ -5,10 +5,11 @@ ports_allow_firewalld:
   - 12235/tcp
   - 48000-48010/tcp
   - 8443-8446/tcp
-  - 8081-8084/tcp
+  - 8080-8084/tcp
   - 1999/tcp
   - 9898/tcp
   - 8063/tcp
+  
 
 services_allow_firewalld:
   - gluster

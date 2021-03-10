@@ -105,3 +105,22 @@
 
 
 {% endblock %}
+
+{% block selinux %}
+##################################################################
+                REPORT SELINUX {{ ansible_hostname }}             
+##################################################################
+
+- Realizada a instalação/atualização dos pacotes: 
+
+{% for i in  selinux_tools_status.results %}
+{{ i.item }}
+{% endfor %}
+
+- SELinux alterado para {{ selinux_permissive_status.state }}
+
+- Realizada liberação de porta SSH no SELinux: {{selinux_ssh_port.ports }} | {{ selinux_ssh_port.setype }} | {{ selinux_ssh_port.state }}
+
+- SELinux alterado para {{ selinux_enforcing_status.state }}
+
+{% endblock %}
