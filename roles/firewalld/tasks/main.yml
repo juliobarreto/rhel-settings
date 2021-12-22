@@ -24,6 +24,7 @@
     zone: public
     permanent: yes
     state: enabled
+  ignore_errors: True  
   with_items: "{{ services_allow_firewalld }}"
   register: firewalld_services_allow
 
@@ -33,6 +34,7 @@
     zone: public
     permanent: yes
     state: enabled
+  ignore_errors: True  
   with_items: "{{ ports_allow_firewalld }}"
   notify:
     - Reload FirewallD
